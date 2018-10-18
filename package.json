@@ -1,0 +1,69 @@
+{
+  "name": "l-rn-toolkit",
+  "displayName": "L-RN-Toolkit",
+  "description": "",
+  "version": "0.0.1",
+  "publisher": "leoyoung",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.sayHello"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.sayHello",
+        "title": "Hello World"
+      }
+    ],
+    "configuration":[
+      {
+        "title": "L-RN-Toolkit",
+        "properties": {
+          "L-RN-Toolkit.showExplorer": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show or hide the Explorer"
+          }
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "l-rn-toolkit-view-container",
+          "title": "L-RN-Toolkit",
+          "icon": "assets/react-brands.svg"
+        }
+      ]
+    },
+    "views": {
+      "l-rn-toolkit-view-container": [
+        {
+          "id": "l-rn-toolkit-view-devices",
+          "name": "Devices",
+          "when": "config.L-RN-Toolkit.showExplorer"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.21",
+    "tslint": "^5.8.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  }
+}
