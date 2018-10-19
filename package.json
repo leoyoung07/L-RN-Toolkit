@@ -4,6 +4,10 @@
   "description": "",
   "version": "0.0.1",
   "publisher": "leoyoung",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leoyoung07/L-RN-Toolkit"
+  },
   "engines": {
     "vscode": "^1.28.0"
   },
@@ -11,17 +15,42 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.sayHello"
+    "onView:l-rn-toolkit-view-devices"
   ],
   "main": "./out/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.sayHello",
-        "title": "Hello World"
+        "command": "l-rn-toolkit.refreshDevicesView",
+        "title": "Refresh Devices",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        },
+        "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.copyDeviceId",
+        "title": "Copy Device Id",
+        "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.deployToDevice",
+        "title": "Deploy To Device",
+        "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.reloadApp",
+        "title": "Reload App On Device",
+        "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.openDevMenu",
+        "title": "Open Dev Menu On Device",
+        "category": "L-RN-Toolkit"
       }
     ],
-    "configuration":[
+    "configuration": [
       {
         "title": "L-RN-Toolkit",
         "properties": {
@@ -33,6 +62,33 @@
         }
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "l-rn-toolkit.refreshDevicesView",
+          "when": "view == l-rn-toolkit-view-devices",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "l-rn-toolkit.copyDeviceId",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.deployToDevice",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.reloadApp",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.openDevMenu",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        }
+      ]
+    },
     "viewsContainers": {
       "activitybar": [
         {
@@ -60,10 +116,14 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.21",
-    "tslint": "^5.8.0",
+    "@types/clipboardy": "^1.1.0",
+    "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
-    "@types/mocha": "^2.2.42"
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.21"
+  },
+  "dependencies": {
+    "clipboardy": "^1.2.3"
   }
 }

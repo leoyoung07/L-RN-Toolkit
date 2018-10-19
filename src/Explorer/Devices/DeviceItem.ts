@@ -10,7 +10,8 @@ export class DeviceItem extends vscode.TreeItem {
   public contextValue = 'DeviceItem';
   constructor(
     private context: vscode.ExtensionContext,
-    private deviceId: string,
+    public readonly deviceId: string,
+    public readonly deviceStatus: string,
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly command?: vscode.Command
@@ -20,6 +21,6 @@ export class DeviceItem extends vscode.TreeItem {
   }
 
   get tooltip(): string {
-    return `${this.label}-${this.deviceId}`;
+    return `${this.deviceId}[${this.deviceStatus}]`;
   }
 }

@@ -1,6 +1,6 @@
 # l-rn-toolkit README
 
-This is the README for your extension "l-rn-toolkit". After writing up a brief description, we recommend including the following sections.
+React Native Development Toolkit
 
 ## Features
 

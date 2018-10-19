@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { shellCommand } from '../../Utils';
 import { DeviceItem } from './DeviceItem';
 
 export class DevicesNodeProvider
@@ -25,16 +26,33 @@ export class DevicesNodeProvider
     element?: DeviceItem | undefined
   ): vscode.ProviderResult<DeviceItem[]> {
     if (!element) {
-      return Promise.resolve([
-        new DeviceItem(
-          this.context,
-          'test_device',
-          'Test Device',
-          vscode.TreeItemCollapsibleState.None
-        )
-      ]);
+      return this.getDevices();
     } else {
       return Promise.resolve([]);
     }
+  }
+
+  public refresh() {
+    this.treeDataChangeEventEmitter.fire();
+  }
+
+  private async getDevices(): Promise<DeviceItem[]> {
+    const output = await shellCommand('adb', ['devices']);
+    const deviceLines = output.split('\n').filter(line => {
+      return line.trim() && !/list of devices attached/gi.test(line);
+    });
+    const devices = deviceLines.map(line => {
+      const deviceInfo = line.split('\t');
+      const deviceId = deviceInfo[0];
+      const deviceStatus = deviceInfo[1];
+      return new DeviceItem(
+        this.context,
+        deviceId,
+        deviceStatus,
+        deviceId,
+        vscode.TreeItemCollapsibleState.None
+      );
+    });
+    return devices;
   }
 }
