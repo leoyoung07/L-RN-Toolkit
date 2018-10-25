@@ -48,6 +48,16 @@
         "command": "l-rn-toolkit.openDevMenu",
         "title": "Open Dev Menu On Device",
         "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.showLogs",
+        "title": "Show Logs",
+        "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.showLogsWithFilter",
+        "title": "Show Logs With Filter",
+        "category": "L-RN-Toolkit"
       }
     ],
     "configuration": [
@@ -85,6 +95,14 @@
         },
         {
           "command": "l-rn-toolkit.openDevMenu",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.showLogs",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.showLogsWithFilter",
           "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
         }
       ]

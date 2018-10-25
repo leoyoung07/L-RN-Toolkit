@@ -2,8 +2,7 @@ import { spawn, SpawnOptions } from 'child_process';
 export function shellCommand(
   cmd: string,
   args?: ReadonlyArray<string>,
-  options?: SpawnOptions,
-  onData?: (data: string) => void
+  options?: SpawnOptions
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     try {
@@ -11,13 +10,6 @@ export function shellCommand(
       let output = '';
       childProcess.stdout.on('data', data => {
         output += data;
-        if (onData) {
-          try {
-            onData(data.toString());
-          } catch (error) {
-            reject(error);
-          }
-        }
       });
       childProcess.stderr.on('data', err => {
         reject(err);

@@ -21,8 +21,6 @@ export function activate(context: vscode.ExtensionContext) {
     devicesNodeProvider
   );
 
-  const outputChannel = vscode.window.createOutputChannel('L-RN-Toolkit');
-
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with  registerCommand
   // The commandId parameter must match the command field in package.json
@@ -53,20 +51,11 @@ export function activate(context: vscode.ExtensionContext) {
     async (deviceItem: DeviceItem) => {
       // The code you place here will be executed every time your command is executed
       if (deviceItem && deviceItem.deviceId) {
-        try {
-          outputChannel.show();
-          await shellCommand(
-            'react-native',
-            ['run-android', '--deviceId', deviceItem.deviceId],
-            { cwd: vscode.workspace.rootPath },
-            (data) => {
-              outputChannel.append(data);
-            }
-          );
-        } catch (error) {
-          outputChannel.appendLine(error);
-          outputChannel.show();
-        }
+        const terminal = vscode.window.createTerminal();
+        terminal.show();
+        // react-native-cli bug: https://github.com/facebook/react-native/issues/18243
+        // terminal.sendText(`react-native run-android --deviceId ${deviceItem.deviceId}`, true);
+        terminal.sendText(`react-native run-android`, true);
       }
     }
   );
@@ -105,6 +94,34 @@ export function activate(context: vscode.ExtensionContext) {
           'keyevent',
           '82'
         ]);
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'l-rn-toolkit.showLogs',
+    async (deviceItem: DeviceItem) => {
+      // The code you place here will be executed every time your command is executed
+      if (deviceItem && deviceItem.deviceId) {
+        const terminal = vscode.window.createTerminal();
+        terminal.show();
+        terminal.sendText(`adb -s ${deviceItem.deviceId} logcat`, true);
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'l-rn-toolkit.showLogsWithFilter',
+    async (deviceItem: DeviceItem) => {
+      // The code you place here will be executed every time your command is executed
+      if (deviceItem && deviceItem.deviceId) {
+        const terminal = vscode.window.createTerminal();
+        terminal.show();
+        terminal.sendText(`adb -s ${deviceItem.deviceId} logcat -s`, false);
       }
     }
   );
