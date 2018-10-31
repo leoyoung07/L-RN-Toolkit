@@ -58,6 +58,11 @@
         "command": "l-rn-toolkit.showLogsWithFilter",
         "title": "Show Logs With Filter",
         "category": "L-RN-Toolkit"
+      },
+      {
+        "command": "l-rn-toolkit.showIpInfo",
+        "title": "Show Ip Info",
+        "category": "L-RN-Toolkit"
       }
     ],
     "configuration": [
@@ -103,6 +108,10 @@
         },
         {
           "command": "l-rn-toolkit.showLogsWithFilter",
+          "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
+        },
+        {
+          "command": "l-rn-toolkit.showIpInfo",
           "when": "view == l-rn-toolkit-view-devices && viewItem == DeviceItem"
         }
       ]

@@ -127,6 +127,20 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'l-rn-toolkit.showIpInfo',
+    async (deviceItem: DeviceItem) => {
+      // The code you place here will be executed every time your command is executed
+      if (deviceItem && deviceItem.deviceId) {
+        const terminal = vscode.window.createTerminal();
+        terminal.show();
+        terminal.sendText(`adb -s ${deviceItem.deviceId} shell ifconfig`, true);
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
 }
 
 export function deactivate() {
